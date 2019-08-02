@@ -7,4 +7,6 @@ void setup() {
 
 void loop() {
   voltageMesurments();
+  ampsMesurments();
+  
 }
