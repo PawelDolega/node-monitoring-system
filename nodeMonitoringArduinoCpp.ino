@@ -1,5 +1,6 @@
 void initialization()
 {
+ Serial.begin(9600); //init serial monitor
  pinMode(CZ1a,INPUT);
  pinMode(CZ1b,INPUT);
  pinMode(CZ1c,INPUT);
@@ -8,6 +9,11 @@ void initialization()
  pinMode(CZ3,INPUT);
  pinMode(CZ5,INPUT);
  pinMode(CZ6,INPUT);
+ if (!htu.begin())
+ {
+ Serial.println("Couldn't find sensor!");
+ while (1);
+ }
  
 }
 void voltageMesurments()
@@ -46,6 +52,7 @@ void voltageMesurments()
   }
 
 }
+//ACS712-20
 void ampsMesurments()
 {
   //Firts current sensor
@@ -65,4 +72,12 @@ void ampsMesurments()
   double CZ6Voltage=(readCZ6VtoAmps/1024)*5000;
   double CZ6Amps=((CZ6Voltage-2500)/mVperAmp20ASensor);
   Serial.println(CZ6Amps);
+}
+void tempHumidity()
+{
+  float temp = htu.readTemperature();
+  float rel_hum = htu.readHumidity();
+  //Serial.print("Temp: "); Serial.print(temp); Serial.print(" C");
+  //Serial.print("\t\t");
+  //Serial.print("Humidity: "); Serial.print(rel_hum); Serial.println(" \%");
 }
